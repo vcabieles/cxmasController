@@ -13,11 +13,12 @@ var app = express();
 var Gpio = require('onoff').Gpio,
     led = new Gpio(8, 'out');
     var onOrOFF = 0, count = 0;
-    setInterval(()=>{
+    var theInterval = setInterval(()=>{
         count++;
         console.log(count);
         if(count >= 50){
             led.unexport();
+            clearInterval(theInterval);
             console.log("turning off system");
         }else{
             console.log("count not 50");
