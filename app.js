@@ -21,9 +21,11 @@ var Gpio = require('onoff').Gpio,
         }else{
             console.log("count not 50");
             if(onOrOFF === 0){
+                onOrOFF = 1;
                 console.log("turning on");
                 led.writeSync(1);
             }else{
+                onOrOFF = 0;
                 console.log("turning off");
                 led.writeSync(0)
             }
