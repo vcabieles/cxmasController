@@ -10,6 +10,23 @@ var users = require('./routes/users');
 
 var app = express();
 
+var Gpio = require('onoff').Gpio,
+    led = new Gpio(17, 'out');
+    var onOrOFF = 0, count = 0;
+    setTimeout(()=>{
+        count++;
+        if(count === 50){
+            led.unexport();
+        }else{
+            if(onOrOFF === 0){
+                led.writeSync(1);
+            }else{
+                led.writeSync(0)
+            };
+        }
+    },500);
+
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
