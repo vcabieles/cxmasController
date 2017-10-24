@@ -16,8 +16,9 @@ var Gpio = require('onoff').Gpio,
     setInterval(()=>{
         count++;
         console.log(count);
-        if(count === 50){
+        if(count >= 50){
             led.unexport();
+            console.log("turning off system");
         }else{
             console.log("count not 50");
             if(onOrOFF === 0){
