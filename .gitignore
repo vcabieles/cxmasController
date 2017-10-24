@@ -1,8 +1,5 @@
 # Build and Release Folders
 .idea
-bin/
-bin-debug/
-bin-release/
 [Oo]bj/ # FlashDevelop obj
 [Bb]in/ # FlashDevelop bin
 
