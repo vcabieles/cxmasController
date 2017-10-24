@@ -13,16 +13,20 @@ var app = express();
 var Gpio = require('onoff').Gpio,
     led = new Gpio(8, 'out');
     var onOrOFF = 0, count = 0;
-    setTimeout(()=>{
+    setInterval(()=>{
         count++;
+        console.log(count);
         if(count === 50){
             led.unexport();
         }else{
+            console.log("count not 50");
             if(onOrOFF === 0){
+                console.log("turning on");
                 led.writeSync(1);
             }else{
+                console.log("turning off");
                 led.writeSync(0)
-            };
+            }
         }
     },500);
 
