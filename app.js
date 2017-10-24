@@ -11,7 +11,7 @@ var users = require('./routes/users');
 var app = express();
 
 var Gpio = require('onoff').Gpio,
-    led = new Gpio(8, 'out');
+    led = new Gpio(26, 'out');
     var onOrOFF = 0, count = 0;
     var theInterval = setInterval(()=>{
         count++;
