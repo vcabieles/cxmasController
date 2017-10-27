@@ -1,14 +1,15 @@
-var express = require('express');
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-var config = require("./config");
+const express = require('express'),
+      path = require('path'),
+      favicon = require('serve-favicon'),
+      logger = require('morgan'),
+      cookieParser = require('cookie-parser'),
+      bodyParser = require('body-parser'),
+      config = require("./config");
 
-var routes = require('./routes/index');
+const routes = require('./routes/index'),
+      switches = require('./api/switches');
 
-var app = express();
+const app = express();
 app.set('xecret', config.secret);
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -23,6 +24,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
+app.use('/api/v1/switch', switches);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
