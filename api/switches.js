@@ -1,10 +1,11 @@
 const express = require('express'),
       router = express.Router();
 var Gpio = require('onoff').Gpio;
+var led = new Gpio(14, 'out');
 
 router.post("/on", (req, res, next)=>{
     let body = req.body;
-    var led = new Gpio(14, 'out');
+
     var onOrOFF = 0, count = 0;
     var theInterval = setInterval(()=>{
         count++;
