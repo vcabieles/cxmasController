@@ -1,0 +1,70 @@
+.fixedBar {
+    width: 100%;
+    height: 55px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 99;
+    background-color: ghostwhite; }
+
+.logoTitle {
+    margin: 0;
+    line-height: 55px;
+    padding-left: 40px;
+    float: left;
+    width: 25%;
+}
+
+a{
+    text-decoration: none;
+}
+
+.navbarSys{
+    float: right;
+    line-height: 55px;
+    padding-right: 40px;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+li{
+    display: inline;
+}
+
+body {
+    margin: 0px;
+    background-color: #ff92b2;
+}
+
+
+/*////////////////////video background//////////////////*/
+video {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: -100;
+    transform: translateX(-50%) translateY(-50%);
+    background: url('//demosthenes.info/assets/images/polina.jpg') no-repeat;
+    background-size: cover;
+    transition: 1s opacity;
+}
+.stopfade {
+    opacity: .5;
+}
+
+@media screen and (max-width: 500px) {
+    div{width:70%;}
+}
+@media screen and (max-device-width: 800px) {
+    html { background: url(https://thenewcode.com/assets/images/polina.jpg) #000 no-repeat center center fixed; }
+    #bgvid { display: none; }
+}

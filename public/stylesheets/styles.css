@@ -1,0 +1,15 @@
+.fixedBar {
+  width: 100%;
+  height: 45px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 99;
+  background-color: ghostwhite; }
+
+.logoTitle {
+  margin: 0;
+  line-height: 45px; }
+
+body {
+  background-color: #ff92b2; }
