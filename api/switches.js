@@ -11,7 +11,7 @@ router.post("/on", (req, res, next)=>{
         count++;
         console.log(count);
         if(count >= 50){
-            led.unexport();
+            // led.unexport();
             clearInterval(theInterval);
             console.log("turning off system");
         }else{
