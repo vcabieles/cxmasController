@@ -1,8 +1,6 @@
 /**
  * Created by victo on 5/27/2017.
  */
-
-let Bird = require("bluebird");
 let jwt = require('jsonwebtoken');
 let config = require("../../config");
 let uid = require('uuid/v4');

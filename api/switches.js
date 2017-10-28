@@ -1,7 +1,26 @@
 const express = require('express'),
-      router = express.Router();
-var Gpio = require('onoff').Gpio;
-var led = new Gpio(14, 'out');
+      router = express.Router(),
+      jsonfile = require('jsonfile'),
+      helper = require("./common/helpers");
+// var Gpio = require('onoff').Gpio;
+// var led = new Gpio(14, 'out');
+
+router.post("/register", (req, res, next)=>{
+    let body = req.body;
+    if(!body.channels || !Array.isArray(body.channels)){
+        helper.missingFields(res);
+    }else{
+        let file = './data.json';
+
+        jsonfile.writeFile(file, body, function (err) {
+            if (err){
+                helper.serverError(res,err);
+            }else{
+                helper.everythingOk(res, body);
+            }
+        });
+    }
+});
 
 router.post("/on", (req, res, next)=>{
     let body = req.body;
@@ -33,6 +52,9 @@ router.post("/on", (req, res, next)=>{
         message: "But Not Really"
     });
 });
+
+
+
 
 
 module.exports = router;
