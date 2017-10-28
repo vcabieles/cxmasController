@@ -1,15 +1,24 @@
+// #Modules
 const express = require('express'),
       path = require('path'),
       favicon = require('serve-favicon'),
       logger = require('morgan'),
       cookieParser = require('cookie-parser'),
       bodyParser = require('body-parser'),
-      config = require("./config");
-
+      config = require("./config"),
+      flags = require("./api/common/flags");
+      fs = require("fs");
+// #Routes
 const routes = require('./routes/index'),
       switches = require('./api/switches');
 
-const app = express();
+// #App
+const app = express(),
+      switchesFile = './switches.json';
+
+
+
+
 app.set('xecret', config.secret);
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

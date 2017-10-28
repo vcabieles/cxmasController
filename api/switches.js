@@ -2,16 +2,17 @@ const express = require('express'),
       router = express.Router(),
       jsonfile = require('jsonfile'),
       helper = require("./common/helpers");
+
 // var Gpio = require('onoff').Gpio;
 // var led = new Gpio(14, 'out');
 
 router.post("/register", (req, res, next)=>{
     let body = req.body;
+    console.log(body);
     if(!body.switches || !Array.isArray(body.switches)){
         helper.missingFields(res);
     }else{
-        let file = './data.json';
-
+        let file = './switches.json';
         jsonfile.writeFile(file, body, function (err) {
             if (err){
                 helper.serverError(res,err);
@@ -21,6 +22,23 @@ router.post("/register", (req, res, next)=>{
         });
     }
 });
+
+router.post("/modifySwitches", (req, res, next)=>{
+    let body = req.body;
+    if(!body.switches || !Array.isArray(body.switches)){
+        helper.missingFields(res);
+    }else{
+        let file = './data.json';
+        jsonfile.writeFile(file, body, function (err) {
+            if (err){
+                helper.serverError(res,err);
+            }else{
+                helper.everythingOk(res, body);
+            }
+        });
+    }
+});
+
 
 router.post("/on", (req, res, next)=>{
     let body = req.body;

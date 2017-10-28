@@ -4,3 +4,4 @@ bower_components
 .DS_Store
 config.js
 data.json
+switches.json
