@@ -7,7 +7,7 @@ const express = require('express'),
 
 router.post("/register", (req, res, next)=>{
     let body = req.body;
-    if(!body.channels || !Array.isArray(body.channels)){
+    if(!body.switches || !Array.isArray(body.switches)){
         helper.missingFields(res);
     }else{
         let file = './data.json';

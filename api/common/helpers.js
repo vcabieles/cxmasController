@@ -36,7 +36,7 @@ let helpers = {
         res.status(409).json({
             status: "ERROR",
             transaction: "UNPAID",
-            message: "Missing Fields"
+            message: "Missing Or Incorrect Fields"
         });
     },
     everythingOk: function(res,data){
