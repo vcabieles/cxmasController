@@ -80,9 +80,9 @@ router.post("/on", (req, res, next)=>{
     });
     toTurnOnArr.forEach((switchOn)=>{
        setTimeout(()=>{
-            switchOn.switch.writeSync(1);
-            console.log("turningOn", switchOn);
-       },switchOn.wait)
+            switchOn.switch.writeSync(0);
+            console.log("turningOn", switchOn.pin);
+       },switchOn.wait*1000)
     });
 console.log(toTurnOnArr);
     // var onOrOFF = 0, count = 0;
@@ -130,7 +130,7 @@ router.post("/off", (req, res, next)=>{
         setTimeout(()=>{
             switchOn.switch.writeSync(1);
             console.log("turningOn", switchOn.pin);
-        },switchOn.wait)
+        },switchOn.wait*1000)
     });
     console.log(toTurnOnArr);
     // var onOrOFF = 0, count = 0;
