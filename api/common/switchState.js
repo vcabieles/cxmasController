@@ -8,7 +8,7 @@ let state = module.exports = {
             switches.forEach((theSwitch, i)=>{
                 // theSwitch.switch = new Gpio(theSwitch.pin, "out");
                 state.activeSwitches.push(theSwitch);
-                console.log("pushed and activated the gpio pin 00");
+                console.log("pushed and activated the gpio pin: ", theSwitch.label);
             });
             resolve(state.activeSwitches);
         });
