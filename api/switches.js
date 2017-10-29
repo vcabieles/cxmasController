@@ -109,19 +109,13 @@ router.post("/onOffSync", (req, res, next)=>{
     }else{
 
     }
-    let switches = switchState.getActiveSwitches();
-    let toTurnOnArr = body.switches.map((currentSwitch)=>{
-        let toTurnOn = switches.filter(theSwitch => theSwitch.uuid === currentSwitch.uuid);
-        toTurnOn[0].wait = currentSwitch.wait;
-        return toTurnOn[0];
-    });
-    toTurnOnArr.forEach((switchOn)=>{
-        setTimeout(()=>{
-            switchOn.switch.writeSync(1);
-            console.log("turningOff", switchOn.pin);
-        },switchOn.wait*1000)
-    });
-    console.log(toTurnOnArr);
+    body.switches = switchState.createMap(body.switches);
+    let mapIteratorCallback = function (currentSwitch){
+        console.log(currentSwitch.uuid, "Current Switch");
+    };
+    switchState.onOffSync(body, mapIteratorCallback);
+
+
 
     res.status(200).json({
         status: "I think is on?!",

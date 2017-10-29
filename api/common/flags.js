@@ -1,5 +1,6 @@
 let flags = {
-    areSwitchesRegistered: false
+    areSwitchesRegistered: false,
+    isMapRecursive: false
 };
 
 module.exports = flags;

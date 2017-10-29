@@ -49,7 +49,29 @@ let self = module.exports = {
             toTurnOn[0].wait = currentSwitch.wait;
             return toTurnOn[0];
         });
-        return switches;
+        return toTurnOnArr;
+    },
+    onOffSync: (switchMap, callback)=>{
+        switchMap.switches.forEach((singleSwitch,i)=>{
+            setTimeout(()=>{
+                if(singleSwitch.switchIs === "ON"){
+                    self.on(singleSwitch,(currentSwitch)=>{
+                        callback(currentSwitch,i);
+                    });
+                }else if(singleSwitch.switchIs === "OFF"){
+                    self.off(singleSwitch,(currentSwitch)=>{
+                        callback(currentSwitch,i);
+                    });
+                }
+                console.log(singleSwitch.wait);
+
+                if(switchMap.time === "INFINITY" && i === (switchMap.switches.length-1)){
+                    console.log("we reach the end call me again");
+                    self.onOffSync(switchMap, callback);
+                }
+            },singleSwitch.wait*1000);
+
+        });
     }
 
 };
