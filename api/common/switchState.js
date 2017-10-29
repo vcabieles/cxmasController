@@ -33,13 +33,11 @@ let self = module.exports = {
         setTimeout(()=>{
             theSwitch.switch.writeSync(0);
             callback(theSwitch);
-            console.log("turningON", theSwitch.pin);
         },theSwitch.wait*1000)
     },
     off: (theSwitch)=>{
         setTimeout(()=>{
             theSwitch.switch.writeSync(1);
-            console.log("turningOFF", theSwitch.pin);
         },theSwitch.wait*1000)
     },
     createMap: (switches)=>{
@@ -56,19 +54,13 @@ let self = module.exports = {
         switchMap.switches.forEach((singleSwitch,i)=>{
             setTimeout(()=>{
                 if(singleSwitch.switchIs === "ON"){
-                    console.log(singleSwitch.switch, "turnin on");
-                    self.on(singleSwitch,(currentSwitch)=>{
-                        callback(currentSwitch,i);
-                    });
+                    console.log(singleSwitch.switch, "turnin on");.
+                    singleSwitch.switch.writeSync(0);
+                    callback(singleSwitch,i);
                 }else if(singleSwitch.switchIs === "OFF"){
-                    self.off(singleSwitch,(currentSwitch)=>{
-                        console.log(singleSwitch.switch, "turnin off");
-
-                        callback(currentSwitch,i);
-                    });
+                    singleSwitch.switch.writeSync(1);
+                    callback(singleSwitch,i);
                 }
-                console.log(singleSwitch.wait);
-
                 if(switchMap.time === "INFINITY" && i === (switchMap.switches.length-1)){
                     console.log("we reach the end call me again");
                     self.onOffSync(switchMap, callback);
