@@ -18,7 +18,6 @@ router.post("/register", (req, res, next)=>{
                 helper.serverError(res,err);
             }else{
                 switchState.activateSwitches(body.switches).then((activeSwithces)=>{
-                    console.log(activeSwithces, "in the promise");
                     helper.everythingOk(res, body);
                 }).catch((err)=>{
                     helper.serverError(res,err);
@@ -47,7 +46,6 @@ router.post("/modifySwitches", (req, res, next)=>{
                     if(toModify[i] === undefined){
                         return theSwitch;
                     }else if(theSwitch.uuid === toModify[i].uuid){
-                        console.log(theSwitch, "\n matching switches");
                         switchState.replaceSwitch(theSwitch, toModify[i]);
                         return toModify[i];
                     }else{
@@ -69,28 +67,45 @@ router.post("/modifySwitches", (req, res, next)=>{
 
 router.post("/on", (req, res, next)=>{
     let body = req.body;
-
-    var onOrOFF = 0, count = 0;
-    var theInterval = setInterval(()=>{
-        count++;
-        console.log(count);
-        if(count >= 50){
-            // led.unexport();
-            clearInterval(theInterval);
-            console.log("turning off system");
-        }else{
-            console.log("count not 50");
-            if(onOrOFF === 0){
-                onOrOFF = 1;
-                console.log("turning on");
-                led.writeSync(1);
-            }else{
-                onOrOFF = 0;
-                console.log("turning off");
-                led.writeSync(0)
-            }
-        }
-    },500);
+    // if(!body.switches || !Array.isArray(body.switches)){
+    //     helper.missingFields(res);
+    // }else{
+    //
+    // }
+    let switches = switchState.getActiveSwitches();
+    let toTurnOnArr = body.switches.map((currentSwitch)=>{
+        let toTurnOn = switches.filter(theSwitch => theSwitch.uuid === currentSwitch.uuid);
+        toTurnOn[0].wait = currentSwitch.wait;
+        return toTurnOn[0];
+    });
+    toTurnOnArr.forEach((switchOn)=>{
+       setTimeout(()=>{
+            switchOn.switch.writeSync(1);
+            console.log("turningOn", switchOn);
+       },switchOn.wait)
+    });
+console.log(toTurnOnArr);
+    // var onOrOFF = 0, count = 0;
+    // var theInterval = setInterval(()=>{
+    //     count++;
+    //     console.log(count);
+    //     if(count >= 50){
+    //         // led.unexport();
+    //         clearInterval(theInterval);
+    //         console.log("turning off system");
+    //     }else{
+    //         console.log("count not 50");
+    //         if(onOrOFF === 0){
+    //             onOrOFF = 1;
+    //             console.log("turning on");
+    //             led.writeSync(1);
+    //         }else{
+    //             onOrOFF = 0;
+    //             console.log("turning off");
+    //             led.writeSync(0)
+    //         }
+    //     }
+    // },500);
     res.status(200).json({
         status: "I think is on?!",
         transaction: "PAID",
