@@ -55,16 +55,15 @@ let self = module.exports = {
             setTimeout(()=>{
                 let toTurnOn = self.activeSwitches.filter(theSwitch => theSwitch.uuid === singleSwitch.uuid);
                 if(singleSwitch.switchIs === "ON"){
-                    console.log(singleSwitch.pin, "turnin on");
+                    console.log(singleSwitch.uuid, "turnin on");
                     toTurnOn[0].switch.writeSync(0);
                     callback(singleSwitch,i);
 
                 }else if(singleSwitch.switchIs === "OFF"){
-                    console.log(singleSwitch.pin, "turnin on");
+                    console.log(singleSwitch.uuid, "turnin OFF");
                     toTurnOn[0].switch.writeSync(1);
                     callback(singleSwitch,i);
-                }
-                if(switchMap.time === "INFINITY" && i === (switchMap.switches.length-1)){
+                }else if(switchMap.time === "INFINITY" && i === (switchMap.switches.length-1)){
                     console.log("we reach the end call me again");
                     self.onOffSync(switchMap, callback);
                 }
