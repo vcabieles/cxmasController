@@ -18,6 +18,7 @@ router.post("/register", (req, res, next)=>{
                 helper.serverError(res,err);
             }else{
                 switchState.activateSwitches(body.switches).then((activeSwithces)=>{
+                    flags.areSwitchesRegistered = true;
                     helper.everythingOk(res, body);
                 }).catch((err)=>{
                     helper.serverError(res,err);
