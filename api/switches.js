@@ -3,13 +3,13 @@ const express = require('express'),
       jsonfile = require('jsonfile'),
       helper = require("./common/helpers"),
       flags = require("./common/flags"),
-      file = './switches.json';
+      file = './switches.json',
+      switchState = require("./common/switchState");
 // var Gpio = require('onoff').Gpio;
 // var led = new Gpio(14, 'out');
 
 router.post("/register", (req, res, next)=>{
     let body = req.body;
-    console.log(body);
     if(!body.switches || !Array.isArray(body.switches)){
         helper.missingFields(res);
     }else{
@@ -17,7 +17,12 @@ router.post("/register", (req, res, next)=>{
             if (err){
                 helper.serverError(res,err);
             }else{
-                helper.everythingOk(res, body);
+                switchState.activateSwitches(body.switches).then((activeSwithces)=>{
+                    console.log(activeSwithces, "in the promise");
+                    helper.everythingOk(res, body);
+                }).catch((err)=>{
+                    helper.serverError(res,err);
+                });
             }
         });
     }
@@ -42,6 +47,9 @@ router.post("/modifySwitches", (req, res, next)=>{
                     if(toModify[i] === undefined){
                         return theSwitch;
                     }else if(theSwitch.uuid === toModify[i].uuid){
+                        console.log(theSwitch, "\n matching switches");
+                        switchState.replaceSwitch(theSwitch, toModify[i]);
+                    // .unexport();
                         return toModify[i];
                     }else{
                         return theSwitch;
