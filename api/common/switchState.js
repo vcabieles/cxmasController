@@ -56,12 +56,14 @@ let self = module.exports = {
         switchMap.switches.forEach((singleSwitch,i)=>{
             setTimeout(()=>{
                 if(singleSwitch.switchIs === "ON"){
-                    console.log(singleSwitch)
+                    console.log(singleSwitch.switch, "turnin on");
                     self.on(singleSwitch,(currentSwitch)=>{
                         callback(currentSwitch,i);
                     });
                 }else if(singleSwitch.switchIs === "OFF"){
                     self.off(singleSwitch,(currentSwitch)=>{
+                        console.log(singleSwitch.switch, "turnin off");
+
                         callback(currentSwitch,i);
                     });
                 }
