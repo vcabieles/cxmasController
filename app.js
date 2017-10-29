@@ -16,8 +16,20 @@ const routes = require('./routes/index'),
 const app = express(),
       switchesFile = './switches.json';
 
+fs.stat(switchesFile, function(err, stat) {
+    if(err === null) {
+        console.log('File exists');
+        flags.areSwitchesRegistered = true;
+        console.log(flags)
 
-
+    } else if(err.code === 'ENOENT') {
+        // file does not exist
+        flags.areSwitchesRegistered = false;
+        console.log(flags, "file does not exits")
+    } else {
+        console.log('Some other error: ', err.code);
+    }
+});
 
 app.set('xecret', config.secret);
 // view engine setup

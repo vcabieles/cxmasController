@@ -1,8 +1,9 @@
 const express = require('express'),
       router = express.Router(),
       jsonfile = require('jsonfile'),
-      helper = require("./common/helpers");
-
+      helper = require("./common/helpers"),
+      flags = require("./common/flags"),
+      file = './switches.json';
 // var Gpio = require('onoff').Gpio;
 // var led = new Gpio(14, 'out');
 
@@ -12,8 +13,7 @@ router.post("/register", (req, res, next)=>{
     if(!body.switches || !Array.isArray(body.switches)){
         helper.missingFields(res);
     }else{
-        let file = './switches.json';
-        jsonfile.writeFile(file, body, function (err) {
+        jsonfile.writeFile(file, body, (err) => {
             if (err){
                 helper.serverError(res,err);
             }else{
@@ -28,14 +28,34 @@ router.post("/modifySwitches", (req, res, next)=>{
     if(!body.switches || !Array.isArray(body.switches)){
         helper.missingFields(res);
     }else{
-        let file = './data.json';
-        jsonfile.writeFile(file, body, function (err) {
-            if (err){
-                helper.serverError(res,err);
-            }else{
-                helper.everythingOk(res, body);
-            }
-        });
+        if(flags.areSwitchesRegistered === false){
+            res.status(400).json({
+                status: "ERROR",
+                transaction: "UNPAID",
+                message: "The Switches are not registered. Please add them first."
+            });
+        }else{
+            jsonfile.readFile(file, (err, obj) =>{
+                let currentSwitches = obj.switches;
+                let toModify = body.switches;
+                let modifiedSwitches = currentSwitches.map((theSwitch, i)=>{
+                    if(toModify[i] === undefined){
+                        return theSwitch;
+                    }else if(theSwitch.uuid === toModify[i].uuid){
+                        return toModify[i];
+                    }else{
+                        return theSwitch;
+                    }
+                });
+                jsonfile.writeFile(file, {switches: modifiedSwitches}, (err) => {
+                    if (err){
+                        helper.serverError(res,err);
+                    }else{
+                        helper.everythingOk(res, modifiedSwitches);
+                    }
+                });
+            })
+        }
     }
 });
 
