@@ -128,8 +128,8 @@ router.post("/off", (req, res, next)=>{
     });
     toTurnOnArr.forEach((switchOn)=>{
         setTimeout(()=>{
-            switchOn.switch.writeSync(0);
-            console.log("turningOn", switchOn);
+            switchOn.switch.writeSync(1);
+            console.log("turningOn", switchOn.pin);
         },switchOn.wait)
     });
     console.log(toTurnOnArr);
