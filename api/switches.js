@@ -114,7 +114,7 @@ router.post("/onOffSync", (req, res, next)=>{
     let mapIteratorCallback = function (currentSwitch){
         // console.log(currentSwitch.uuid, "Current Switch");
     };
-    switchState.onOffSync({switches: switches, time: body.time}, mapIteratorCallback);
+    switchState.onOffSync(body, mapIteratorCallback);
 
 
 
