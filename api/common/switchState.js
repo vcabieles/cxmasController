@@ -47,6 +47,7 @@ let self = module.exports = {
         let toTurnOnArr = switches.map((currentSwitch)=>{
             let toTurnOn = activeSwitches.filter(theSwitch => theSwitch.uuid === currentSwitch.uuid);
             toTurnOn[0].wait = currentSwitch.wait;
+            toTurnOn[0].switchIs = currentSwitch.switchIs;
             return toTurnOn[0];
         });
         return toTurnOnArr;
@@ -55,6 +56,7 @@ let self = module.exports = {
         switchMap.switches.forEach((singleSwitch,i)=>{
             setTimeout(()=>{
                 if(singleSwitch.switchIs === "ON"){
+                    console.log(singleSwitch)
                     self.on(singleSwitch,(currentSwitch)=>{
                         callback(currentSwitch,i);
                     });
