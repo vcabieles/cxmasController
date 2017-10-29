@@ -63,7 +63,8 @@ let self = module.exports = {
                     console.log(singleSwitch.uuid, "turnin OFF");
                     toTurnOn[0].switch.writeSync(1);
                     callback(singleSwitch,i);
-                }else if(switchMap.time === "INFINITY" && i === (switchMap.switches.length-1)){
+                }
+                if(switchMap.time === "INFINITY" && i === (switchMap.switches.length-1)){
                     console.log("we reach the end call me again");
                     self.onOffSync(switchMap, callback);
                 }
