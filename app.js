@@ -6,21 +6,22 @@ const express = require('express'),
       cookieParser = require('cookie-parser'),
       bodyParser = require('body-parser'),
       config = require("./config"),
-      flags = require("./api/common/flags");
-      fs = require("fs");
+      flags = require("./api/common/flags"),
+      switchState = require("./api/common/switchState");
 // #Routes
 const routes = require('./routes/index'),
-      switches = require('./api/switches');
+      switches = require('./api/switches'),
+      jsonfile = require('jsonfile');
 
 // #App
 const app = express(),
       switchesFile = './switches.json';
 
-fs.stat(switchesFile, function(err, stat) {
+jsonfile.readFile(switchesFile, (err, obj) =>{
     if(err === null) {
         console.log('File exists');
+        switchState.activateSwitches(obj.switches);
         flags.areSwitchesRegistered = true;
-        console.log(flags)
 
     } else if(err.code === 'ENOENT') {
         // file does not exist

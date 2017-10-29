@@ -49,7 +49,6 @@ router.post("/modifySwitches", (req, res, next)=>{
                     }else if(theSwitch.uuid === toModify[i].uuid){
                         console.log(theSwitch, "\n matching switches");
                         switchState.replaceSwitch(theSwitch, toModify[i]);
-                    // .unexport();
                         return toModify[i];
                     }else{
                         return theSwitch;
