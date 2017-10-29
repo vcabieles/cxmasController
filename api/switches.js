@@ -113,6 +113,53 @@ console.log(toTurnOnArr);
     });
 });
 
+router.post("/off", (req, res, next)=>{
+    let body = req.body;
+    // if(!body.switches || !Array.isArray(body.switches)){
+    //     helper.missingFields(res);
+    // }else{
+    //
+    // }
+    let switches = switchState.getActiveSwitches();
+    let toTurnOnArr = body.switches.map((currentSwitch)=>{
+        let toTurnOn = switches.filter(theSwitch => theSwitch.uuid === currentSwitch.uuid);
+        toTurnOn[0].wait = currentSwitch.wait;
+        return toTurnOn[0];
+    });
+    toTurnOnArr.forEach((switchOn)=>{
+        setTimeout(()=>{
+            switchOn.switch.writeSync(0);
+            console.log("turningOn", switchOn);
+        },switchOn.wait)
+    });
+    console.log(toTurnOnArr);
+    // var onOrOFF = 0, count = 0;
+    // var theInterval = setInterval(()=>{
+    //     count++;
+    //     console.log(count);
+    //     if(count >= 50){
+    //         // led.unexport();
+    //         clearInterval(theInterval);
+    //         console.log("turning off system");
+    //     }else{
+    //         console.log("count not 50");
+    //         if(onOrOFF === 0){
+    //             onOrOFF = 1;
+    //             console.log("turning on");
+    //             led.writeSync(1);
+    //         }else{
+    //             onOrOFF = 0;
+    //             console.log("turning off");
+    //             led.writeSync(0)
+    //         }
+    //     }
+    // },500);
+    res.status(200).json({
+        status: "I think is on?!",
+        transaction: "PAID",
+        message: "But Not Really"
+    });
+});
 
 
 
