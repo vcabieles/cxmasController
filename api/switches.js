@@ -72,44 +72,14 @@ router.post("/on", (req, res, next)=>{
     // }else{
     //
     // }
-    let switches = switchState.getActiveSwitches();
-    let toTurnOnArr = body.switches.map((currentSwitch)=>{
-        let toTurnOn = switches.filter(theSwitch => theSwitch.uuid === currentSwitch.uuid);
-        toTurnOn[0].wait = currentSwitch.wait;
-        return toTurnOn[0];
+    let toTurnOnMap = switchState.createMap(body.switches);
+    toTurnOnMap.forEach((switchOn)=>{
+        switchState.on(switchOn, (turnedOn)=>{})
     });
-    toTurnOnArr.forEach((switchOn)=>{
-       setTimeout(()=>{
-            switchOn.switch.writeSync(0);
-            console.log("turningOn", switchOn.pin);
-       },switchOn.wait*1000)
-    });
-console.log(toTurnOnArr);
-    // var onOrOFF = 0, count = 0;
-    // var theInterval = setInterval(()=>{
-    //     count++;
-    //     console.log(count);
-    //     if(count >= 50){
-    //         // led.unexport();
-    //         clearInterval(theInterval);
-    //         console.log("turning off system");
-    //     }else{
-    //         console.log("count not 50");
-    //         if(onOrOFF === 0){
-    //             onOrOFF = 1;
-    //             console.log("turning on");
-    //             led.writeSync(1);
-    //         }else{
-    //             onOrOFF = 0;
-    //             console.log("turning off");
-    //             led.writeSync(0)
-    //         }
-    //     }
-    // },500);
     res.status(200).json({
-        status: "I think is on?!",
+        status: "Will be turned on.",
         transaction: "PAID",
-        message: "But Not Really"
+        message: ""
     });
 });
 
@@ -120,6 +90,25 @@ router.post("/off", (req, res, next)=>{
     // }else{
     //
     // }
+    let toTurnOnMap = switchState.createMap(body.switches);
+    toTurnOnMap.forEach((switchOn)=>{
+        switchState.off(switchOn, (turnedOn)=>{})
+    });
+
+    res.status(200).json({
+        status: "I think is on?!",
+        transaction: "PAID",
+        message: "But Not Really"
+    });
+});
+
+router.post("/onOffSync", (req, res, next)=>{
+    let body = req.body;
+    if(!body.switches || !Array.isArray(body.switches)){
+        helper.missingFields(res);
+    }else{
+
+    }
     let switches = switchState.getActiveSwitches();
     let toTurnOnArr = body.switches.map((currentSwitch)=>{
         let toTurnOn = switches.filter(theSwitch => theSwitch.uuid === currentSwitch.uuid);
@@ -129,39 +118,17 @@ router.post("/off", (req, res, next)=>{
     toTurnOnArr.forEach((switchOn)=>{
         setTimeout(()=>{
             switchOn.switch.writeSync(1);
-            console.log("turningOn", switchOn.pin);
+            console.log("turningOff", switchOn.pin);
         },switchOn.wait*1000)
     });
     console.log(toTurnOnArr);
-    // var onOrOFF = 0, count = 0;
-    // var theInterval = setInterval(()=>{
-    //     count++;
-    //     console.log(count);
-    //     if(count >= 50){
-    //         // led.unexport();
-    //         clearInterval(theInterval);
-    //         console.log("turning off system");
-    //     }else{
-    //         console.log("count not 50");
-    //         if(onOrOFF === 0){
-    //             onOrOFF = 1;
-    //             console.log("turning on");
-    //             led.writeSync(1);
-    //         }else{
-    //             onOrOFF = 0;
-    //             console.log("turning off");
-    //             led.writeSync(0)
-    //         }
-    //     }
-    // },500);
+
     res.status(200).json({
         status: "I think is on?!",
         transaction: "PAID",
         message: "But Not Really"
     });
 });
-
-
 
 
 module.exports = router;
