@@ -81,9 +81,9 @@ let self = module.exports = {
             self.activeSwitches.forEach((singleSwitch, i)=>{
                 singleSwitch.wait = 0;
                 self.off(singleSwitch);
-                if(i === (singleSwitch.length -1)){
+
                     resolve();
-                }
+
             })
         });
 
