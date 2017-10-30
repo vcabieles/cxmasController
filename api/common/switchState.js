@@ -5,6 +5,7 @@ const Gpio = require('onoff').Gpio,
 
 let self = module.exports = {
     activeSwitches: [],
+    activeTimeOuts: [],
     // switch so that it only deactivate the pin if its a different pin...
     activateSwitches: (switches)=>{
         return new Promise((resolve,reject)=>{
@@ -54,7 +55,8 @@ let self = module.exports = {
     },
     onOffSync: (switchMap, callback)=>{
         switchMap.switches.forEach((singleSwitch,i)=>{
-            setTimeout(()=>{
+            let timeouts = setTimeout(()=>{
+                self.activeTimeOuts.push(timeouts);
                 let toTurnOn = self.activeSwitches.filter(theSwitch => theSwitch.uuid === singleSwitch.uuid);
                 if(singleSwitch.switchIs === "ON"){
                     console.log(singleSwitch.uuid, "turnin on");
@@ -81,10 +83,11 @@ let self = module.exports = {
             self.activeSwitches.forEach((singleSwitch, i)=>{
                 singleSwitch.wait = 0;
                 self.off(singleSwitch);
-
-                    resolve();
-
-            })
+            });
+            self.activeTimeOuts.forEach((timeOutId)=>{
+                clearTimeout(timeOutId);
+            });
+            resolve();
         });
 
     }
