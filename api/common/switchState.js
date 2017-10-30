@@ -74,6 +74,14 @@ let self = module.exports = {
             },singleSwitch.wait*1000);
 
         });
+    },
+    allOff: ()=>{
+        flags.isMapRecursive = false;
+        self.activeSwitches.forEach((singleSwitch)=>{
+            singleSwitch.wait = 0;
+            self.off(singleSwitch);
+        })
     }
+
 
 };
