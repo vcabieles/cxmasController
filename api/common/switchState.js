@@ -1,5 +1,5 @@
 const Gpio = require('onoff').Gpio,
-      flags = require('flags');
+      flags = require('./api/common/flags');
 
 
 
