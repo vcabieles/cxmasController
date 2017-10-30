@@ -1,4 +1,6 @@
-var Gpio = require('onoff').Gpio;
+const Gpio = require('onoff').Gpio,
+      flags = require('flags');
+
 
 
 let self = module.exports = {
@@ -66,6 +68,7 @@ let self = module.exports = {
                 }
                 if(switchMap.time === "INFINITY" && i === (switchMap.switches.length-1)){
                     console.log("we reach the end call me again");
+                    flags.isMapRecursive = true;
                     self.onOffSync(switchMap, callback);
                 }
             },singleSwitch.wait*1000);

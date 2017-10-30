@@ -110,6 +110,12 @@ router.post("/onOffSync", (req, res, next)=>{
     }else{
 
     }
+    if(flags.isMapRecursive === true){
+        flags.isMapRecursive = false;
+        switchState.activeSwitches.forEach((obj)=>{
+            obj.switch.writeSync(1);
+        })
+    }
     let mapIteratorCallback = function (currentSwitch){
         console.log(currentSwitch.uuid, "Current Switch");
     };
