@@ -68,9 +68,9 @@ let self = module.exports = {
                     toTurnOn[0].switch.writeSync(1);
                     callback(singleSwitch,i);
                 }
-                if(switchMap.time === "INFINITY" && i === (switchMap.switches.length-1)){
+                if(switchMap.time === "INFINITY" && i === (switchMap.switches.length-1) && flags.isMapRecursive === true){
                     console.log("we reach the end call me again");
-                    flags.isMapRecursive = true;
+
                     self.onOffSync(switchMap, callback);
                 }
             },singleSwitch.wait*1000);

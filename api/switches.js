@@ -101,6 +101,9 @@ router.post("/onOffSync", (req, res, next)=>{
     }else{
 
     }
+    if(body.time === "INFINITY"){
+        flags.isMapRecursive = true;
+    }
     switchState.allOff().then(()=>{
         helper.everythingOk(res);
         console.log("all of them are stoped");
