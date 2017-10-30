@@ -78,14 +78,13 @@ let self = module.exports = {
     allOff: ()=>{
         return new Promise((resolve, reject)=>{
             flags.setRecursiveMap(false);
+            self.activeTimeOuts.forEach((timeOutId)=>{
+                clearTimeout(timeOutId);
+            });
             self.activeSwitches.forEach((singleSwitch, i)=>{
                 singleSwitch.wait = 0;
                 self.off(singleSwitch);
             });
-            self.activeTimeOuts.forEach((timeOutId)=>{
-                clearTimeout(timeOutId);
-            });
-            self.allOff();
             resolve();
         });
 
