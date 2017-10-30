@@ -102,14 +102,17 @@ router.post("/onOffSync", (req, res, next)=>{
 
     }
     switchState.allOff().then(()=>{
+        helper.everythingOk(res);
+        console.log("all of them are stoped");
+        let mapIteratorCallback = function (currentSwitch){
+            console.log(currentSwitch.uuid, "Current Switch");
+        };
+        switchState.onOffSync(body, mapIteratorCallback);
+
     }).catch(()=>{
         helper.serverError(res);
     });
-    let mapIteratorCallback = function (currentSwitch){
-        console.log(currentSwitch.uuid, "Current Switch");
-    };
-    switchState.onOffSync(body, mapIteratorCallback);
-    helper.everythingOk(res);
+
 
 });
 
