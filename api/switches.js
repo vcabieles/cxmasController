@@ -77,11 +77,7 @@ router.post("/on", (req, res, next)=>{
     toTurnOnMap.forEach((switchOn)=>{
         switchState.on(switchOn, (turnedOn)=>{})
     });
-    res.status(200).json({
-        status: "Will be turned on.",
-        transaction: "PAID",
-        message: ""
-    });
+    helper.everythingOk(res)
 });
 
 router.post("/off", (req, res, next)=>{
@@ -95,12 +91,7 @@ router.post("/off", (req, res, next)=>{
     toTurnOnMap.forEach((switchOn)=>{
         switchState.off(switchOn, (turnedOn)=>{})
     });
-
-    res.status(200).json({
-        status: "I think is on?!",
-        transaction: "PAID",
-        message: "But Not Really"
-    });
+    helper.everythingOk(res);
 });
 
 router.post("/onOffSync", (req, res, next)=>{
@@ -110,23 +101,22 @@ router.post("/onOffSync", (req, res, next)=>{
     }else{
 
     }
-    switchState.allOff();
-    setTimeout(()=>{
+    switchState.allOff().then(()=>{
         let mapIteratorCallback = function (currentSwitch){
             console.log(currentSwitch.uuid, "Current Switch");
         };
         switchState.onOffSync(body, mapIteratorCallback);
-    }, 10000);
-
-
-
-
-    res.status(200).json({
-        status: "I think is on?!",
-        transaction: "PAID",
-        message: "But Not Really"
+        helper.everythingOk(res);
+    }).catch(()=>{
+        helper.serverError(res);
     });
 });
 
+
+router.post("/allOff", (req, res, next)=>{
+    switchState.allOff().then(()=>{
+        helper.everythingOk(res)
+    });
+});
 
 module.exports = router;

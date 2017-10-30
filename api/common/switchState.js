@@ -76,11 +76,17 @@ let self = module.exports = {
         });
     },
     allOff: ()=>{
-        flags.isMapRecursive = false;
-        self.activeSwitches.forEach((singleSwitch)=>{
-            singleSwitch.wait = 0;
-            self.off(singleSwitch);
-        })
+        return new Promise((resolve, reject)=>{
+            flags.isMapRecursive = false;
+            self.activeSwitches.forEach((singleSwitch, i)=>{
+                singleSwitch.wait = 0;
+                self.off(singleSwitch);
+                if(i === (singleSwitch.length -1)){
+                    resolve();
+                }
+            })
+        });
+
     }
 
 
