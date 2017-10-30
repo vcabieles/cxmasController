@@ -85,6 +85,7 @@ let self = module.exports = {
             self.activeTimeOuts.forEach((timeOutId)=>{
                 clearTimeout(timeOutId);
             });
+            self.allOff();
             resolve();
         });
 
