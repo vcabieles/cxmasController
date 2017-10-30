@@ -101,11 +101,12 @@ router.post("/onOffSync", (req, res, next)=>{
     }else{
 
     }
-    if(body.time === "INFINITY"){
-        flags.isMapRecursive = true;
-    }
+
     switchState.allOff().then(()=>{
         helper.everythingOk(res);
+        if(body.time === "INFINITY"){
+            flags.setRecursiveMap(true);
+        }
         console.log("all of them are stoped");
         let mapIteratorCallback = function (currentSwitch){
             console.log(currentSwitch.uuid, "Current Switch");

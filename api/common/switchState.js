@@ -66,7 +66,7 @@ let self = module.exports = {
                     toTurnOn[0].switch.writeSync(1);
                     callback(singleSwitch,i);
                 }
-                if(switchMap.time === "INFINITY" && i === (switchMap.switches.length-1) && flags.isMapRecursive === true){
+                if(switchMap.time === "INFINITY" && i === (switchMap.switches.length-1) && flags.getRecursiveMap() === true){
                     console.log("we reach the end call me again");
 
                     self.onOffSync(switchMap, callback);
@@ -77,7 +77,7 @@ let self = module.exports = {
     },
     allOff: ()=>{
         return new Promise((resolve, reject)=>{
-            flags.isMapRecursive = false;
+            flags.setRecursiveMap(false);
             self.activeSwitches.forEach((singleSwitch, i)=>{
                 singleSwitch.wait = 0;
                 self.off(singleSwitch);
