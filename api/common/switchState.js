@@ -73,8 +73,8 @@ let self = module.exports = {
 
                     self.onOffSync(switchMap, callback);
                 }
+                console.log(flags.isMapRecursive, "is map recurive")
             },singleSwitch.wait*1000);
-
         });
     },
     allOff: ()=>{
