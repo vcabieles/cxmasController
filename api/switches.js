@@ -107,6 +107,7 @@ router.post("/onOffSync", (req, res, next)=>{
         if(body.time === "INFINITY"){
             flags.setRecursiveMap(true);
         }else if(Number.isNaN(body.time) === false){
+            console.log("converting time");
             flags.iterateMap = body.time;
         }
         console.log("all of them are stoped");

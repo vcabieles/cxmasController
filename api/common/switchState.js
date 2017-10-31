@@ -71,11 +71,13 @@ let self = module.exports = {
 
                     self.onOffSync(switchMap, callback);
                 }else if(Number.isNaN(switchMap.time) === false && i === (switchMap.switches.length-1) ){
-                    if(!flags.iterateMap === 0){
+                    console.log("inside the is not number and reached the end of the loop");
+                    if(flags.iterateMap !== 0){
+                        console.log("inside the is not sero porblem");
                         flags.iterateMap--;
                         self.onOffSync(switchMap, callback);
                     }else{
-
+                        console.log("inside the else because the number")
                     }
 
                 }
