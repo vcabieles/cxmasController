@@ -70,6 +70,14 @@ let self = module.exports = {
                     console.log("we reach the end call me again");
 
                     self.onOffSync(switchMap, callback);
+                }else if(Number.isNaN(switchMap.time) === false && i === (switchMap.switches.length-1) ){
+                    if(!flags.iterateMap === 0){
+                        flags.iterateMap--;
+                        self.onOffSync(switchMap, callback);
+                    }else{
+
+                    }
+
                 }
                 console.log(flags.isMapRecursive, "is map recurive")
             },singleSwitch.wait*1000);
