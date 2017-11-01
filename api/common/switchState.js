@@ -67,19 +67,12 @@ let self = module.exports = {
                     callback(singleSwitch,i);
                 }
                 if(switchMap.time === "INFINITY" && i === (switchMap.switches.length-1) && flags.getRecursiveMap() === true){
-                    console.log("we reach the end call me again");
-
                     self.onOffSync(switchMap, callback);
                 }else if(Number.isNaN(switchMap.time) === false && i === (switchMap.switches.length-1) ){
-                    console.log("inside the is not number and reached the end of the loop");
                     if(flags.iterateMap !== 0){
-                        console.log("inside the is not sero porblem");
                         flags.iterateMap--;
                         self.onOffSync(switchMap, callback);
-                    }else{
-                        console.log("inside the else because the number")
                     }
-
                 }
                 console.log(flags.isMapRecursive, "is map recurive")
             },singleSwitch.wait*1000);
