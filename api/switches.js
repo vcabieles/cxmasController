@@ -5,8 +5,6 @@ const express = require('express'),
       flags = require("./common/flags"),
       file = './switches.json',
       switchState = require("./common/switchState");
-// var Gpio = require('onoff').Gpio;
-// var led = new Gpio(14, 'out');
 
 router.post("/register", (req, res, next)=>{
     let body = req.body;
@@ -121,6 +119,14 @@ router.post("/onOffSync", (req, res, next)=>{
     });
 
 
+});
+
+router.post("/setTimer", (req, res)=>{
+    let body = req.body;
+    if(body.everyDay === true){
+        flags.timer.isEveryDay = true;
+    }
+    switchState.setTimer(body);
 });
 
 

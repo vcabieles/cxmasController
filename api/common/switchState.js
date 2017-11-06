@@ -95,7 +95,38 @@ let self = module.exports = {
             resolve();
         });
 
+    },
+    setTimer: (data)=>{
+        if(flags.timer.timeOutIDs === 0){
+            turnOffInTime(data, true);
+        }else {
+            flags.timer.timeOutIDs.forEach((id, i)=>{
+                clearTimeout(id);
+                flags.timer.timeOutIDs.splice(i,1);
+            });
+            turnOffInTime(data, false);
+        }
     }
 
 
 };
+
+function turnOffInTime(data, isFirstTime){
+    let currentTime = new Date().getTime();
+    let inTime = new Date(data.date).getTime();
+    let MillisecondTimeout = 0;
+    if(isFirstTime === true){
+        MillisecondTimeout = inTime - currentTime;
+    }else{
+        MillisecondTimeout = 86400000;
+    }
+
+    let timer = setTimeout(()=>{
+        self.allOff();
+        if(flags.timer.isEveryDay === true){
+
+            self.setTimer(data,false);
+        }
+    }, MillisecondTimeout);
+    flags.timer.timeOutIDs.push(timer);
+}
