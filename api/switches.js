@@ -136,7 +136,7 @@ router.post("/allOff", (req, res, next)=>{
     });
 });
 
-router.post("/getAllRegistered", (req, res, next)=>{
+router.get("/getAll", (req, res, next)=>{
     jsonfile.readFile(file, (err, obj) =>{
         helper.everythingOk(res,obj)
     })
